@@ -2,13 +2,13 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate /master_tb/pclk
 add wave -noupdate /master_tb/preset_n
-add wave -noupdate -expand -group Requester /master_tb/master_transfer
-add wave -noupdate -expand -group Requester /master_tb/master_select
-add wave -noupdate -expand -group Requester /master_tb/master_address
-add wave -noupdate -expand -group Requester /master_tb/master_read_write
-add wave -noupdate -expand -group Requester /master_tb/master_write_data
-add wave -noupdate -expand -group Requester /master_tb/master_strobe
-add wave -noupdate -expand -group Requester /master_tb/master_protection
+add wave -noupdate -expand -group Requester /master_tb/requester_transfer
+add wave -noupdate -expand -group Requester /master_tb/requester_select
+add wave -noupdate -expand -group Requester /master_tb/requester_address
+add wave -noupdate -expand -group Requester /master_tb/requester_read_write
+add wave -noupdate -expand -group Requester /master_tb/requester_write_data
+add wave -noupdate -expand -group Requester /master_tb/requester_strobe
+add wave -noupdate -expand -group Requester /master_tb/requester_protection
 add wave -noupdate -expand -group Master /master_tb/DUT/cs
 add wave -noupdate -expand -group Master /master_tb/penable
 add wave -noupdate -expand -group Master /master_tb/psel

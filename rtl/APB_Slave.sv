@@ -12,9 +12,9 @@ module APB_Slave #(
     input  wire                      pwrite,
     input  wire [DATA_WIDTH-1:0]     pwdata,
     input  wire [BYTES_PER_WORD-1:0] pstrb,
-    input  wire                      slave_data_valid,
-    input  wire [DATA_WIDTH-1:0]     slave_read_data,
-    input  wire                      slave_error,
+    input  wire                      completer_data_valid,
+    input  wire [DATA_WIDTH-1:0]     completer_read_data,
+    input  wire                      completer_error,
     output reg  [ADDR_WIDTH-1:0]     slave_address,
     output reg  [2:0]                slave_protection,
     output reg                       slave_read_write,
@@ -23,7 +23,7 @@ module APB_Slave #(
     output reg                       pready,
     output reg  [DATA_WIDTH-1:0]     prdata,
     output reg                       pslverr,
-    output reg                       master_data_ready
+    output reg                       slave_data_ready
 );
     always @(posedge pclk) begin
         if (~preset_n) begin
@@ -35,12 +35,12 @@ module APB_Slave #(
 			pready            <= 0;
 			prdata            <= 0;
 			pslverr           <= 0;
-			master_data_ready <= 0;
+			slave_data_ready <= 0;
         end
         else begin
             if (psel && !penable) begin
                 pready            <= 0;
-                master_data_ready <= 0;
+                slave_data_ready <= 0;
             end
             else if (psel && penable) begin
                 slave_address     <= paddr;
@@ -48,13 +48,13 @@ module APB_Slave #(
                 slave_read_write  <= pwrite;
                 slave_write_data  <= pwdata;
                 slave_strobe      <= pstrb;
-                master_data_ready <= 1;
-                if (slave_data_valid) begin
+                slave_data_ready <= 1;
+                if (completer_data_valid) begin
                     pready  <= 1;
-                    pslverr <= slave_error;
+                    pslverr <= completer_error;
                 end
                 if (!pwrite) begin
-                    prdata  <= slave_read_data;
+                    prdata  <= completer_read_data;
                 end
             end
         end

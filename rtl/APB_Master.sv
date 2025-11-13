@@ -6,13 +6,13 @@ module APB_Master #(
 ) (
     input  wire                      pclk,
     input  wire                      preset_n,
-    input  wire                      master_transfer,
-    input  wire [ADDR_WIDTH-1:0]     master_address,
-    input  wire [2:0]                master_protection,
-    input  wire [NO_SLAVES-1:0]      master_select,
-    input  wire                      master_read_write,
-    input  wire [DATA_WIDTH-1:0]     master_write_data,
-    input  wire [BYTES_PER_WORD-1:0] master_strobe,
+    input  wire                      requester_transfer,
+    input  wire [ADDR_WIDTH-1:0]     requester_address,
+    input  wire [2:0]                requester_protection,
+    input  wire [NO_SLAVES-1:0]      requester_select,
+    input  wire                      requester_read_write,
+    input  wire [DATA_WIDTH-1:0]     requester_write_data,
+    input  wire [BYTES_PER_WORD-1:0] requester_strobe,
     input  wire                      pready,
     input  wire [DATA_WIDTH-1:0]     prdata,
     input  wire                      pslverr,
@@ -49,7 +49,7 @@ module APB_Master #(
         ns = cs;
         case (cs)
             IDLE: begin
-                if (master_transfer) begin
+                if (requester_transfer) begin
                     ns = SETUP;
                 end
             end
@@ -58,7 +58,7 @@ module APB_Master #(
             end
             ACCESS: begin
                 if (pready) begin
-                    ns = master_transfer ? SETUP : IDLE;
+                    ns = requester_transfer ? SETUP : IDLE;
                 end
             end
             default: begin
@@ -85,13 +85,13 @@ module APB_Master #(
                     penable <= 0;
                 end
                 SETUP: begin
-                    paddr   <= master_address;
-                    pprot   <= master_protection;
-                    psel    <= master_select;
+                    paddr   <= requester_address;
+                    pprot   <= requester_protection;
+                    psel    <= requester_select;
                     penable <= 0;
-                    pwrite  <= master_read_write;
-                    pwdata  <= master_write_data;
-                    pstrb   <= master_strobe;
+                    pwrite  <= requester_read_write;
+                    pwdata  <= requester_write_data;
+                    pstrb   <= requester_strobe;
                 end
                 ACCESS: begin
                     penable <= 1;

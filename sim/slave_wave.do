@@ -15,13 +15,13 @@ add wave -noupdate -expand -group Slave /slave_tb/slave_read_write
 add wave -noupdate -expand -group Slave /slave_tb/slave_write_data
 add wave -noupdate -expand -group Slave /slave_tb/slave_strobe
 add wave -noupdate -expand -group Slave /slave_tb/slave_protection
-add wave -noupdate -expand -group Slave /slave_tb/master_data_ready
+add wave -noupdate -expand -group Slave /slave_tb/slave_data_ready
 add wave -noupdate -expand -group Slave /slave_tb/pready
 add wave -noupdate -expand -group Slave /slave_tb/prdata
 add wave -noupdate -expand -group Slave /slave_tb/pslverr
-add wave -noupdate -expand -group Completer /slave_tb/slave_data_valid
-add wave -noupdate -expand -group Completer /slave_tb/slave_read_data
-add wave -noupdate -expand -group Completer /slave_tb/slave_error
+add wave -noupdate -expand -group Completer /slave_tb/completer_data_valid
+add wave -noupdate -expand -group Completer /slave_tb/completer_read_data
+add wave -noupdate -expand -group Completer /slave_tb/completer_error
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {25 ns} 0}
 quietly wave cursor active 1
