@@ -34,7 +34,7 @@ module APB_Master #(
     assign slave_read_data  = prdata;
     assign slave_error      = pslverr;
 
-    // current state logic
+    // Current state logic
     always @(posedge pclk) begin
         if (~preset_n) begin
             cs <= IDLE;
@@ -44,7 +44,7 @@ module APB_Master #(
         end
     end
 
-    // next state logic
+    // Next state logic
     always_comb begin
         ns = cs;
         case (cs)
@@ -67,7 +67,7 @@ module APB_Master #(
         endcase
     end
 
-    // data sampling
+    // Data sampling
     always @(posedge pclk) begin
         if (~preset_n) begin
 			paddr   <= 0;
